@@ -16,7 +16,7 @@ export class CalendarMonth {
     for (let i = 1; i <= 31; i++) {
       const date = new Date(`${this.name} ${i} ${year}`);
       if (Calendar.isDate(date) && date.getMonth() === this.cmMonthOfTheYear) {
-        const day = new CalendarDay(date.getDay(), i);
+        const day = new CalendarDay(date.getDay(), i, this.monthOfTheYear, this.year);
         this.cmDays.push(day);
       }
     }
