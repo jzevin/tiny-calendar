@@ -1,3 +1,5 @@
-# typescript-xkwngq
+# tiny-calendar
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/typescript-xkwngq)
+Building a calendr class for fun
+
+- maybe going to use it for a Angular Module at some point.
