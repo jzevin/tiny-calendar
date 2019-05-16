@@ -122,12 +122,12 @@ class Calendar {
 
 }
 
-const cal = new Calendar(1973);
-log(cal.monthName);
-cal.setMonth(MonthOfTheYear.January);
-log(cal.monthName);
-log(cal.getPreviousMonth().year);
-log(cal.monthName);
+// const cal = new Calendar(1973);
+// log(cal.monthName);
+// cal.setMonth(MonthOfTheYear.January);
+// log(cal.monthName);
+// log(cal.getPreviousMonth().year);
+// log(cal.monthName);
 // for(const d of new CalendarMonth(MonthOfTheYear.September, 1973).days) {
 //   console.log( d );
 // }
