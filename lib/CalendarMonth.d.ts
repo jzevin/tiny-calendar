@@ -1,8 +1,8 @@
-import { MonthOfTheYear } from "./CalendarEnums";
+import { MonthOfTheYear } from './CalendarEnums';
 export declare class CalendarMonth {
-    private _monthOfTheYear;
-    private _days;
-    private _year;
+    private cmMonthOfTheYear;
+    private cmDays;
+    private cmYear;
     constructor(year: number, month: MonthOfTheYear);
     readonly name: string;
     readonly days: any[];

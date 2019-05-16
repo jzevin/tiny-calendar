@@ -1,15 +1,16 @@
-import { CalendarMonth } from "./CalendarMonth";
-import { MonthOfTheYear } from "./CalendarEnums";
+import { MonthOfTheYear } from './CalendarEnums';
+import { CalendarMonth } from './CalendarMonth';
 export declare class Calendar {
-    private _year;
-    _month: CalendarMonth;
-    constructor(year?: number, month?: MonthOfTheYear);
-    year: number;
-    setMonth(moty: MonthOfTheYear): void;
-    getNextMonth(): CalendarMonth;
-    getPreviousMonth(): CalendarMonth;
-    readonly monthName: string;
     static isDate(d: any): boolean;
     static isIntAndNum(num: any): boolean;
     static isBetween(num: number, min: number, max: number): boolean;
+    private calYear;
+    private currMonth;
+    constructor(year?: number, month?: MonthOfTheYear);
+    readonly year: number;
+    setYear(year: number): void;
+    setMonth(moty: MonthOfTheYear): void;
+    readonly currentMonth: CalendarMonth;
+    nextMonth(): void;
+    previousMonth(): void;
 }
