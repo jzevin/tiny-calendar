@@ -22,19 +22,19 @@ export class CalendarMonth {
     }
   }
 
-  get name(): string {
+  public get name(): string {
     return MonthOfTheYear[this.cmMonthOfTheYear];
   }
 
-  get days() {
+  public get days() {
     return this.cmDays;
   }
 
-  get year() {
+  public get year() {
     return this.cmYear;
   }
 
-  get monthOfTheYear(): MonthOfTheYear {
+  public get monthOfTheYear(): MonthOfTheYear {
     return this.cmMonthOfTheYear;
   }
 }
