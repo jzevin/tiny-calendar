@@ -4,7 +4,7 @@ import { CalendarDay } from '../CalendarDay';
 // const cal = new Calendar();
 
 const rnd = (min: number, max: number)=> {
-    return Math.round( (Math.random()*max) + min );
+    return Math.round( (Math.random()*(max-min)) + min );
 }
 
 test(`The days to string to be the same`, () => {
