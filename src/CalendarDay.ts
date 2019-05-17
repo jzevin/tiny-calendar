@@ -1,11 +1,11 @@
-import { Calendar } from './Calendar';
+import Calendar from './Calendar';
 import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
 
 export class CalendarDay {
-  private dayName: string;
-  private dayNumber: number;
-  private dayMonthOfTheYear: MonthOfTheYear;
-  private dayYear: number
+  private __name: string;
+  private __number: number;
+  private __monthOfTheYear: MonthOfTheYear;
+  private __year: number
   constructor(dow: DayOfTheWeek, num: number, monthOfTheYear: MonthOfTheYear, year: number) {
     if (dow === undefined || num === undefined) {
       throw new Error('Must provide a valid day of the week and number.');
@@ -13,26 +13,26 @@ export class CalendarDay {
     if (!Calendar.isBetween(num, 1, 31) && !Calendar.isIntAndNum(num)) {
       throw new Error(`${num} Not a valid day number. Must be 1-31.`);
     }
-    this.dayName = DayOfTheWeek[dow];
-    this.dayNumber = num;
-    this.dayMonthOfTheYear = monthOfTheYear;
-    this.dayYear = year;
+    this.__name = DayOfTheWeek[dow];
+    this.__number = num;
+    this.__monthOfTheYear = monthOfTheYear;
+    this.__year = year;
   }
 
   public get name(): string {
-    return this.dayName;
+    return this.__name;
   }
 
   public get number(): number {
-    return this.dayNumber;
+    return this.__number;
   }
 
   public get year(): number {
-    return this.dayYear;
+    return this.__year;
   }
 
   public get monthName(): string {
-    return MonthOfTheYear[this.dayMonthOfTheYear];
+    return MonthOfTheYear[this.__monthOfTheYear];
   }
 
   public toDate(): Date {

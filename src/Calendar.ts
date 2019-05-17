@@ -1,7 +1,7 @@
 import { MonthOfTheYear } from './CalendarEnums';
 import { CalendarMonth } from './CalendarMonth';
 
-export class Calendar {
+export default class Calendar {
 
   public static isDate(d: any): boolean {
     return d instanceof Date && !isNaN(d.getDay());
@@ -15,49 +15,50 @@ export class Calendar {
     return num >= min && num <= max;
   }
   
-  private calYear: number = new Date().getFullYear();
-  private currMonth: CalendarMonth = new CalendarMonth(this.calYear, new Date().getMonth());
+  private __year: number = new Date().getFullYear();
+  private __month: CalendarMonth = new CalendarMonth(this.__year, new Date().getMonth());
 
   constructor(year?: number, month?: MonthOfTheYear) {
-    year = year || this.calYear;
-    month = month === MonthOfTheYear.January ? month : month === undefined ? this.currMonth.monthOfTheYear : month;
-    this.calYear = year;
+    year = year || this.__year;
+    month = month === MonthOfTheYear.January ? month : month === undefined ? this.__month.monthOfTheYear : month;
+    this.__year = year;
     this.setMonth(month);
   }
 
   public get year(): number {
-    return this.calYear;
+    return this.__year;
   }
 
   public setYear(year: number) {
-    this.calYear = year;
+    this.__year = year;
     this.setMonth(this.currentMonth.monthOfTheYear);
   }
 
   public setMonth(moty: MonthOfTheYear) {
-    this.currMonth = new CalendarMonth(this.year, moty);
+    this.__month = new CalendarMonth(this.year, moty);
   }
 
   public get currentMonth(): CalendarMonth {
-    return this.currMonth;
+    return this.__month;
   }
 
   public nextMonth() {
-    let nextMonth = this.currMonth.monthOfTheYear + 1;
-    let year = this.calYear;
+    let nextMonth = this.__month.monthOfTheYear + 1;
+    let year = this.__year;
     if (nextMonth > 11) {
       nextMonth = MonthOfTheYear.January;
-      this.calYear++;
+      this.__year++;
     }
     this.setMonth(nextMonth);
   }
 
   public previousMonth() {
-    let prevMonth = this.currMonth.monthOfTheYear - 1;
+    let prevMonth = this.__month.monthOfTheYear - 1;
     if (prevMonth < 0) {
       prevMonth = MonthOfTheYear.December;
-      this.calYear--;
+      this.__year--;
     }
     this.setMonth(prevMonth);
   }
 }
+

@@ -2,9 +2,13 @@
   "name": "tiny-calendar",
   "version": "0.0.1",
   "private": true,
+  "source": "src/Calendar.ts",
+  "main": "dist/tiny-calendar.js",
+  "module": "dist/tiny-calendar.mjs",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc",
+    "micro": "microbundle",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
@@ -19,6 +23,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.13",
     "jest": "^24.8.0",
+    "microbundle": "^0.11.0",
     "prettier": "^1.17.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",

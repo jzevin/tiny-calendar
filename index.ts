@@ -1,5 +1,4 @@
-import { Calendar } from './src/Calendar';
+import { Calendar } from './Calendar';
 
-const log = console.log.bind(console);
-const cal = new Calendar();
+export default Calendar;
 
