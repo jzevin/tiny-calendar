@@ -1,10 +1,10 @@
 import Calendar from './Calendar';
 import CalendarDay from './CalendarDay';
-import { MonthOfTheYear } from './CalendarEnums';
+import { MonthOfTheYear, DayOfTheWeek } from './CalendarEnums';
 
 export default class CalendarMonth {
   private __monthOfTheYear: MonthOfTheYear;
-  private __days: any[] = [];
+  private __days: CalendarDay[] = [];
   private __year: number;
 
   constructor(year: number, month: MonthOfTheYear) {
@@ -36,5 +36,9 @@ export default class CalendarMonth {
 
   public get monthOfTheYear(): MonthOfTheYear {
     return this.__monthOfTheYear;
+  }
+
+  public get dayOfTheWeekStartsOn(): DayOfTheWeek {
+    return this.__days[0].toDate().getDay();
   }
 }
