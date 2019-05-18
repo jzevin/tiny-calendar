@@ -21,14 +21,14 @@ export default class Calendar {
   
   private __year: number = new Date().getFullYear();
   private __month: CalendarMonth = new CalendarMonth(this.__year, new Date().getMonth());
-  private __view: CalendarView;
+  private __view: CalendarView | null;
 
-  constructor(el: HTMLElement, year?: number, month?: MonthOfTheYear) {
+  constructor(el: HTMLElement | null, year?: number, month?: MonthOfTheYear) {
     year = year || this.__year;
     month = month === MonthOfTheYear.January ? month : month === undefined ? this.__month.monthOfTheYear : month;
     this.__year = year;
     this.setMonth(month);
-    this.__view = new CalendarView(el, this);
+    this.__view = el === null ? null : new CalendarView(el, this);
   }
 
   public get year(): number {

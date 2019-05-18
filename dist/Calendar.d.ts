@@ -9,7 +9,7 @@ export default class Calendar {
     private __year;
     private __month;
     private __view;
-    constructor(el: HTMLElement, year?: number, month?: MonthOfTheYear);
+    constructor(el: HTMLElement | null, year?: number, month?: MonthOfTheYear);
     readonly year: number;
     setYear(year: number): void;
     setMonth(moty: MonthOfTheYear): void;
