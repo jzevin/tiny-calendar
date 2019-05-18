@@ -1,5 +1,5 @@
-import { MonthOfTheYear, DayOfTheWeek } from '../CalendarEnums';
-import { CalendarDay } from '../CalendarDay';
+import { MonthOfTheYear, DayOfTheWeek } from '../../CalendarEnums';
+import CalendarDay from '../../CalendarDay';
 
 // const cal = new Calendar();
 

@@ -1,8 +1,8 @@
-import  Calendar from './Calendar';
-import { CalendarDay } from './CalendarDay';
+import Calendar from './Calendar';
+import CalendarDay from './CalendarDay';
 import { MonthOfTheYear } from './CalendarEnums';
 
-export class CalendarMonth {
+export default class CalendarMonth {
   private __monthOfTheYear: MonthOfTheYear;
   private __days: any[] = [];
   private __year: number;

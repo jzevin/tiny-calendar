@@ -1,5 +1,5 @@
 import { MonthOfTheYear } from './CalendarEnums';
-export declare class CalendarMonth {
+export default class CalendarMonth {
     private __monthOfTheYear;
     private __days;
     private __year;

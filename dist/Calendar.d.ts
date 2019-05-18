@@ -1,9 +1,11 @@
-import { MonthOfTheYear } from './CalendarEnums';
-import { CalendarMonth } from './CalendarMonth';
+import { MonthOfTheYear, DayOfTheWeek } from './CalendarEnums';
+import CalendarMonth from './CalendarMonth';
 export default class Calendar {
     static isDate(d: any): boolean;
     static isIntAndNum(num: any): boolean;
     static isBetween(num: number, min: number, max: number): boolean;
+    static monthOfTheYear: typeof MonthOfTheYear;
+    static dayOfTheWeek: typeof DayOfTheWeek;
     private __year;
     private __month;
     constructor(year?: number, month?: MonthOfTheYear);

@@ -1,7 +1,7 @@
 import Calendar from './Calendar';
 import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
 
-export class CalendarDay {
+export default class CalendarDay {
   private __name: string;
   private __number: number;
   private __monthOfTheYear: MonthOfTheYear;

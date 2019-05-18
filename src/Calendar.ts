@@ -1,5 +1,5 @@
-import { MonthOfTheYear } from './CalendarEnums';
-import { CalendarMonth } from './CalendarMonth';
+import { MonthOfTheYear, DayOfTheWeek } from './CalendarEnums';
+import CalendarMonth from './CalendarMonth';
 
 export default class Calendar {
 
@@ -14,6 +14,9 @@ export default class Calendar {
   public static isBetween(num: number, min: number, max: number): boolean {
     return num >= min && num <= max;
   }
+
+  public static monthOfTheYear = MonthOfTheYear;
+   public static dayOfTheWeek = DayOfTheWeek;
   
   private __year: number = new Date().getFullYear();
   private __month: CalendarMonth = new CalendarMonth(this.__year, new Date().getMonth());
@@ -61,4 +64,3 @@ export default class Calendar {
     this.setMonth(prevMonth);
   }
 }
-
