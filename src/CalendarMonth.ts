@@ -1,6 +1,6 @@
 import Calendar from './Calendar';
 import CalendarDay from './CalendarDay';
-import { MonthOfTheYear, DayOfTheWeek } from './CalendarEnums';
+import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
 
 export default class CalendarMonth {
   private __monthOfTheYear: MonthOfTheYear;

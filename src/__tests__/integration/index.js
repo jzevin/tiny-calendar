@@ -1,2 +1,2 @@
 
-const cal = new tinyCalendar(document.body);
+const cal = new tinyCalendar(document.querySelector('#cal'));
