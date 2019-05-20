@@ -35,6 +35,10 @@ export default class CalendarDay {
     return MonthOfTheYear[this.__monthOfTheYear];
   }
 
+  public get monthOfTheYear(): MonthOfTheYear {
+    return this.__monthOfTheYear;
+  }
+
   public toDate(): Date {
     return new Date( `${this.monthName} ${this.number} ${this.year}` );
   }

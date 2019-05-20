@@ -7,8 +7,8 @@ export default class Calendar {
     static monthOfTheYear: typeof MonthOfTheYear;
     static dayOfTheWeek: typeof DayOfTheWeek;
     private __year;
-    private __month;
-    private __view;
+    private month;
+    private view;
     constructor(el: HTMLElement | null, year?: number, month?: MonthOfTheYear);
     readonly year: number;
     setYear(year: number): void;

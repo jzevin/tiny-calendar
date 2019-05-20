@@ -20,15 +20,15 @@ export default class Calendar {
    public static dayOfTheWeek = DayOfTheWeek;
   
   private __year: number = new Date().getFullYear();
-  private __month: CalendarMonth = new CalendarMonth(this.__year, new Date().getMonth());
-  private __view: CalendarView | null;
+  private month: CalendarMonth = new CalendarMonth(this.__year, new Date().getMonth());
+  private view: CalendarView | null;
 
   constructor(el: HTMLElement | null, year?: number, month?: MonthOfTheYear) {
     year = year || this.__year;
-    month = month === MonthOfTheYear.January ? month : month === undefined ? this.__month.monthOfTheYear : month;
+    month = month === MonthOfTheYear.January ? month : month === undefined ? this.month.monthOfTheYear : month;
     this.__year = year;
     this.setMonth(month);
-    this.__view = el === null ? null : new CalendarView(el, this);
+    this.view = el === null ? null : new CalendarView(el, this);
   }
 
   public get year(): number {
@@ -41,15 +41,15 @@ export default class Calendar {
   }
 
   public setMonth(moty: MonthOfTheYear) {
-    this.__month = new CalendarMonth(this.year, moty);
+    this.month = new CalendarMonth(this.year, moty);
   }
 
   public get currentMonth(): CalendarMonth {
-    return this.__month;
+    return this.month;
   }
 
   public nextMonth() {
-    let nextMonth = this.__month.monthOfTheYear + 1;
+    let nextMonth = this.month.monthOfTheYear + 1;
     let year = this.__year;
     if (nextMonth > 11) {
       nextMonth = MonthOfTheYear.January;
@@ -59,7 +59,7 @@ export default class Calendar {
   }
 
   public previousMonth() {
-    let prevMonth = this.__month.monthOfTheYear - 1;
+    let prevMonth = this.month.monthOfTheYear - 1;
     if (prevMonth < 0) {
       prevMonth = MonthOfTheYear.December;
       this.__year--;

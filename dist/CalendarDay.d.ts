@@ -9,5 +9,6 @@ export default class CalendarDay {
     readonly number: number;
     readonly year: number;
     readonly monthName: string;
+    readonly monthOfTheYear: MonthOfTheYear;
     toDate(): Date;
 }
