@@ -1,14 +1,18 @@
 import Calendar from "./Calendar";
 export default class CalendarView {
-    container: HTMLDivElement;
-    el: HTMLElement;
-    private __calendar;
-    private __styles;
-    private __prevBtn;
-    private __nextBtn;
+    private el;
+    private container;
+    private calendar;
+    private styles;
+    private btns;
+    private templates;
+    private sections;
     constructor(el: HTMLElement, calendar: Calendar);
-    private render;
     private onClick;
+    private changeMonth;
+    private changeYear;
+    private toggleSection;
+    private render;
     private onClickPrevNext;
     private onDestroy;
 }
