@@ -2,8 +2,198 @@ import Calendar from "./Calendar";
 import { DayOfTheWeek, MonthOfTheYear } from "./CalendarEnums";
 
 const assets = {
-    html: '<div class="tiny-calendar-wrap"><header><div class="title">Tiny Calendar</div><nav class="controls"><div class="action"><button class="btn btn-prev">&lt;</button></div><div class="action"><button class="btn btn-month">September</button></div><div class="action"><button class="btn btn-year">2020</button></div><div class="action"><button class="btn btn-next">&gt;</button></div></nav></header><section class="pick-months"><ul><template class="pick-month-template"><li><div>Jan</div></li></template></ul></section><section class="pick-years"><ul><template class="pick-year-template"><li class="year">xxxx</li></template></ul></section><section class="pick-days"><table class="cal-table" cellspacing="0"><thead class="days"><tr><template><td><div class="day-name">xxxx</div></td></template></tr></thead><tbody><tr><template class="pick-day-template"><td><div class="day"><div class="day-inner">xxxx</div></div></td></template></tr></tbody></table></section></div>',
-    css: '.tiny-calendar-wrap { background-color: #ccc; padding: 0.125em; border-radius: 0.25em; overflow: hidden; box-shadow: 8px 8px 7px rgba(0, 0, 0, 0.07); font-family: sans-serif; } .tiny-calendar-wrap * { box-sizing: border-box; } .tiny-calendar-wrap header { height: 64px; } .tiny-calendar-wrap .title { padding: 0.35em 0; background-color: #111; color: #eee; text-align: center; } .tiny-calendar-wrap .controls { display: flex; } .tiny-calendar-wrap .controls .action { display: flex; flex: 1 1 auto; background-color: #333; } .tiny-calendar-wrap .controls .action .btn { border: none; background-color: #333; flex: 1 1 auto; padding: 0.5em; color: #eee; text-transform: uppercase; outline: none; font-size: 100%; line-height: 1.15; margin: 0; cursor: pointer; } .tiny-calendar-wrap .controls .action .btn:hover { background-color: #111; } .tiny-calendar-wrap .day { display: flex; justify-content: center; align-items: center; padding: 0.25em; color: #555; } .tiny-calendar-wrap .day.on.today{ background-color: #fff; } .tiny-calendar-wrap .day.on { background-color: #eee; cursor: pointer; } .tiny-calendar-wrap .day.on:hover { background-color: #fff; } .tiny-calendar-wrap .day.off { background-color: #dedede; } .tiny-calendar-wrap .cal-table { width: 100%; } .tiny-calendar-wrap .cal-table .days { background-color: #555; text-align: center; } .tiny-calendar-wrap .cal-table .day-name { padding: 0.25em 0.75em; color: #bbb; text-transform: uppercase; outline: 1px solid #444; } .tiny-calendar-wrap section.pick-months, .tiny-calendar-wrap section.pick-years { height: 0; overflow: hidden; transition: height 120ms; } .tiny-calendar-wrap section.pick-months.open, .tiny-calendar-wrap section.pick-years.open { height: calc(100% - 65px); } .tiny-calendar-wrap section.pick-months ul, .tiny-calendar-wrap section.pick-years ul { height: 100%; display: flex; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; } .tiny-calendar-wrap section.pick-months ul li, .tiny-calendar-wrap section.pick-years ul li { background-color: #dedede; padding: 0.25em; flex: 0 0 25%; margin: 0; display: flex; justify-content: center; align-items: center; outline: 1px solid #bbb; text-transform: uppercase; transition: background-color 250ms; cursor: pointer; } .tiny-calendar-wrap section.pick-months ul li:hover, .tiny-calendar-wrap section.pick-years ul li:hover { background-color: #fff; }'
+    html: `
+        <div class="tiny-calendar-wrap">
+            <header>
+                <div class="title">Tiny Calendar</div>
+                <nav class="controls">
+                    <div class="action">
+                        <button class="btn btn-prev">&lt;</button>
+                    </div>
+                    <div class="action">
+                        <button class="btn btn-month">September</button>
+                    </div>
+                    <div class="action">
+                        <button class="btn btn-year">2020</button>
+                    </div>
+                    <div class="action">
+                        <button class="btn btn-next">&gt;</button>
+                    </div>
+                </nav>
+            </header>
+            <section class="pick-months">
+                <ul>
+                    <template class="pick-month-template">
+                        <li>
+                            <div>Jan</div>
+                        </li>
+                    </template>
+                </ul>
+            </section>
+            <section class="pick-years">
+                <ul>
+                    <template class="pick-year-template">
+                        <li class="year">xxxx</li>
+                    </template>
+                </ul>
+            </section>
+            <section class="pick-days">
+                <table class="cal-table" cellspacing="0">
+                    <thead class="days">
+                        <tr>
+                            <template>
+                                <td>
+                                    <div class="day-name">xxxx</div>
+                                </td>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <template class="pick-day-template">
+                                <td>
+                                    <div class="day">
+                                        <div class="day-inner">xxxx</div>
+                                    </div>
+                                </td>
+                            </template>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    `,
+    css: `
+        .tiny-calendar-wrap {
+            background-color: #ccc;
+            padding: 0.125em;
+            border-radius: 0.25em;
+            overflow: hidden;
+            box-shadow: 8px 8px 7px rgba(0, 0, 0, 0.07);
+            font-family: sans-serif;
+        }
+
+        .tiny-calendar-wrap * {
+            box-sizing: border-box;
+        }
+
+        .tiny-calendar-wrap header {
+            height: 64px;
+        }
+
+        .tiny-calendar-wrap .title {
+            padding: 0.35em 0;
+            background-color: #111;
+            color: #eee;
+            text-align: center;
+        }
+
+        .tiny-calendar-wrap .controls {
+            display: flex;
+        }
+
+        .tiny-calendar-wrap .controls .action {
+            display: flex;
+            flex: 1 1 auto;
+            background-color: #333;
+        }
+
+        .tiny-calendar-wrap .controls .action .btn {
+            border: none;
+            background-color: #333;
+            flex: 1 1 auto;
+            padding: 0.5em;
+            color: #eee;
+            text-transform: uppercase;
+            outline: none;
+            font-size: 100%;
+            line-height: 1.15;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .tiny-calendar-wrap .controls .action .btn:hover {
+            background-color: #111;
+        }
+
+        .tiny-calendar-wrap .day {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.25em;
+            color: #555;
+        }
+
+        .tiny-calendar-wrap .day.on.today{
+            background-color: #fff;
+        }
+
+        .tiny-calendar-wrap .day.on {
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+        .tiny-calendar-wrap .day.on:hover {
+            background-color: #fff;
+        }
+
+        .tiny-calendar-wrap .day.off {
+            background-color: #dedede;
+        }
+
+        .tiny-calendar-wrap .cal-table {
+            width: 100%;
+        }
+
+        .tiny-calendar-wrap .cal-table .days {
+            background-color: #555;
+            text-align: center;
+        }
+
+        .tiny-calendar-wrap .cal-table .day-name {
+            padding: 0.25em 0.75em;
+            color: #bbb;
+            text-transform: uppercase;
+            outline: 1px solid #444;
+        }
+
+        .tiny-calendar-wrap section.pick-months, .tiny-calendar-wrap section.pick-years {
+            height: 0;
+            overflow: hidden;
+            transition: height 120ms;
+        }
+
+        .tiny-calendar-wrap section.pick-months.open, .tiny-calendar-wrap section.pick-years.open {
+            height: calc(100% - 65px);
+        }
+
+        .tiny-calendar-wrap section.pick-months ul, .tiny-calendar-wrap section.pick-years ul {
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tiny-calendar-wrap section.pick-months ul li, .tiny-calendar-wrap section.pick-years ul li {
+            background-color: #dedede;
+            padding: 0.25em;
+            flex: 0 0 25%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            outline: 1px solid #bbb;
+            text-transform: uppercase;
+            transition: background-color 250ms;
+            cursor: pointer;
+        }
+
+        .tiny-calendar-wrap section.pick-months ul li:hover, .tiny-calendar-wrap section.pick-years ul li:hover {
+            background-color: #fff;
+        }
+        `
 };
 
 export default class CalendarView {
