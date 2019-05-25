@@ -8,6 +8,7 @@
   "scripts": {
     "test": "jest --config jestconfig.json",
     "dev": "microbundle -w",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "build": "microbundle build",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",

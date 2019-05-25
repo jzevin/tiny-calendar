@@ -5,7 +5,7 @@ export default class CalendarDay {
   private _name: string;
   private _number: number;
   private _monthOfTheYear: MonthOfTheYear;
-  private _year: number
+  private _year: number;
   constructor(dow: DayOfTheWeek, num: number, monthOfTheYear: MonthOfTheYear, year: number) {
     if (dow === undefined || num === undefined) {
       throw new Error('Must provide a valid day of the week and number.');
@@ -40,6 +40,6 @@ export default class CalendarDay {
   }
 
   public toDate(): Date {
-    return new Date( `${this.monthName} ${this.number} ${this.year}` );
+    return new Date(`${this.monthName} ${this.number} ${this.year}`);
   }
 }

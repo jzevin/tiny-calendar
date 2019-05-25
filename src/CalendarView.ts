@@ -1,14 +1,14 @@
-import Calendar from "./Calendar";
-import { DayOfTheWeek, MonthOfTheYear } from "./CalendarEnums";
-import { ICalendarOptions, IHSLAColor } from "./CalendarModels";
+import Calendar from './Calendar';
+import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
+import { ICalendarOptions, IHSLAColor } from './CalendarModels';
 
 function darkenLighten(color: IHSLAColor, amt: number): string {
-    return `hsla(${color.h}, ${color.s}%, ${color.l + amt}%, ${color.a})`;
+  return `hsla(${color.h}, ${color.s}%, ${color.l + amt}%, ${color.a})`;
 }
 
 const assets = {
-    css: (options: ICalendarOptions): string => {
-        return `
+  css: (options: ICalendarOptions): string => {
+    return `
         .tiny-calendar-wrap {
             overflow: hidden;
             box-shadow: 8px 8px 7px rgba(0, 0, 0, 0.07);
@@ -137,9 +137,9 @@ const assets = {
         .tiny-calendar-wrap section.pick-months ul li:hover, .tiny-calendar-wrap section.pick-years ul li:hover {
             background-color: #fff;
         }
-        `
-    },
-    html: `
+        `;
+  },
+  html: `
         <div class="tiny-calendar-wrap">
             <header>
                 <div class="title">Tiny Calendar</div>
@@ -199,164 +199,163 @@ const assets = {
                 </table>
             </section>
         </div>
-    `
+    `,
 };
 
 export default class CalendarView {
+  private el: HTMLElement;
+  private container: HTMLElement;
+  private calendar: Calendar;
+  private styles: HTMLStyleElement;
+  private btns: any;
+  private templates: any;
+  private sections: any;
 
-    private el: HTMLElement;
-    private container: HTMLElement;
-    private calendar: Calendar;
-    private styles: HTMLStyleElement;
-    private btns: any;
-    private templates: any;
-    private sections: any;
+  constructor(el: HTMLElement, calendar: Calendar) {
+    this.container = el;
+    this.container.innerHTML = assets.html;
+    this.el = this.container.querySelector<HTMLElement>('.tiny-calendar-wrap')!;
+    this.calendar = calendar;
+    // templates
+    this.templates = {
+      day: this.el.querySelector('template.pick-day-template'),
+      month: this.el.querySelector('template.pick-month-template'),
+      year: this.el.querySelector('template.pick-year-template'),
+    };
+    // styles
+    this.styles = document.createElement('style');
+    this.styles.type = 'text/css';
+    this.styles.innerHTML = assets.css(this.calendar.options!);
+    this.el.appendChild(this.styles);
+    // buttons
+    this.btns = {
+      month: this.el.querySelector<HTMLButtonElement>('.btn-month'),
+      next: this.el.querySelector<HTMLButtonElement>('.btn-next'),
+      previous: this.el.querySelector<HTMLButtonElement>('.btn-prev'),
+      year: this.el.querySelector<HTMLButtonElement>('.btn-year'),
+    };
+    // sections
+    this.sections = {
+      pickMonths: this.el.querySelector<HTMLElement>('section.pick-months'),
+      pickYears: this.el.querySelector<HTMLElement>('section.pick-years'),
+    };
+    // events
+    this.onClick = this.onClick.bind(this);
+    this.el.addEventListener('click', this.onClick);
+    // render
+    this.render();
+  }
 
-    constructor(el: HTMLElement, calendar: Calendar) {
-        this.container = el;
-        this.container.innerHTML = assets.html;
-        this.el = this.container.querySelector<HTMLElement>('.tiny-calendar-wrap')!;
-        this.calendar = calendar;
-        // templates
-        this.templates = {
-            day: this.el.querySelector('template.pick-day-template'),
-            month: this.el.querySelector('template.pick-month-template'),
-            year: this.el.querySelector('template.pick-year-template')
-        };
-        // styles
-        this.styles = document.createElement('style');
-        this.styles.type = 'text/css';
-        this.styles.innerHTML = assets.css(this.calendar.options!);
-        this.el.appendChild(this.styles);
-        // buttons
-        this.btns = {
-            month: this.el.querySelector<HTMLButtonElement>('.btn-month'),
-            next: this.el.querySelector<HTMLButtonElement>('.btn-next'),
-            previous: this.el.querySelector<HTMLButtonElement>('.btn-prev'),
-            year: this.el.querySelector<HTMLButtonElement>('.btn-year')
-        };
-        // sections
-        this.sections = {
-            pickMonths: this.el.querySelector<HTMLElement>('section.pick-months'),
-            pickYears: this.el.querySelector<HTMLElement>('section.pick-years'),
-        }
-        // events
-        this.onClick = this.onClick.bind(this);
-        this.el.addEventListener('click', this.onClick);
-        // render
-        this.render();
-    }
-
-    private onClick(e: MouseEvent) {
-        const t: HTMLElement = e.target as HTMLTemplateElement;
-        if(t.classList.contains('day-inner') || t.classList.contains('day')) {
-            // console.log(this.calendar.currentMonth.days[Number(t.dataset[`dayIndex`])]);
-        } else if (t.classList.contains('btn')) {
-            if(t.classList.contains('btn-month')) {
-                this.toggleSection(this.sections.pickMonths);
-            } else if(t.classList.contains('btn-year')) {
-                this.toggleSection(this.sections.pickYears);
-            } else if(t.classList.contains('btn-prev')) {
-                this.onClickPrevNext('prev');
-            } else if(t.classList.contains('btn-next')) {
-                this.onClickPrevNext('next');
-            }
-        } else if(t.classList.contains('year')) {
-            this.changeYear(+t.innerText);
-        } else if(t.classList.contains('month')) {
-            this.changeMonth(+t.dataset[`monthIndex`]!);
-        }
-    }
-
-    private changeMonth(month: MonthOfTheYear) {
-        this.calendar.setMonth(month);
+  private onClick(e: MouseEvent) {
+    const t: HTMLElement = e.target as HTMLTemplateElement;
+    if (t.classList.contains('day-inner') || t.classList.contains('day')) {
+      // console.log(this.calendar.currentMonth.days[Number(t.dataset[`dayIndex`])]);
+    } else if (t.classList.contains('btn')) {
+      if (t.classList.contains('btn-month')) {
         this.toggleSection(this.sections.pickMonths);
-        this.render();
-    }
-
-    private changeYear(year: number) {
-        this.calendar.setYear(year);
+      } else if (t.classList.contains('btn-year')) {
         this.toggleSection(this.sections.pickYears);
-        this.render();
+      } else if (t.classList.contains('btn-prev')) {
+        this.onClickPrevNext('prev');
+      } else if (t.classList.contains('btn-next')) {
+        this.onClickPrevNext('next');
+      }
+    } else if (t.classList.contains('year')) {
+      this.changeYear(+t.innerText);
+    } else if (t.classList.contains('month')) {
+      this.changeMonth(+t.dataset[`monthIndex`]!);
     }
+  }
 
-    private toggleSection(section: any) {
-        this.el.querySelectorAll('.open').forEach(el=>{
-            if(el!==section) {
-                el.classList.remove('open');
-            }
-        });
-        section.classList.toggle('open');
-    }
-    
-    private render() {
-        // reset containers
-        this.el.querySelector('.cal-table thead tr')!.innerHTML = '';
-        this.el.querySelector('.cal-table tbody')!.innerHTML = '';
-        this.sections.pickYears.querySelector('ul')!.innerHTML = '';
-        this.sections.pickMonths.querySelector('ul')!.innerHTML = '';
-        // day names
-        for (let i = 0; i <= 6; i++) {
-            const el = document.createElement('td');
-            el.classList.add('day-name')
-            el.innerHTML = `<div>${DayOfTheWeek[i].substr(0,1)}</div>`;
-            this.el.querySelector('table thead tr')!.appendChild(el);
-        }
-        // months
-        const monthsTarget = this.sections.pickMonths.querySelector('ul');
-        for (let i = 0; i < 12; i++) {
-            const li = document.createElement('li');
-            li.innerText = MonthOfTheYear[i].slice(0,3);
-            li.classList.add('month');
-            li.setAttribute('data-month-index', `${i}`);
-            monthsTarget.appendChild(li);
-        }
-        // years
-        for (let i = this.calendar.year-12; i < this.calendar.year+12; i++) {
-            const yearClone = document.importNode(this.templates.year.content, true);
-            yearClone.querySelector('li').innerHTML = `${i}`;
-            this.sections.pickYears.querySelector('ul').appendChild(yearClone);
-        }
-        // days
-        const startsOn = this.calendar.currentMonth.dayOfTheWeekStartsOn;
-        const date = new Date();
-        const todaysDate = new Date(`${MonthOfTheYear[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`);
-        for (let row = 0, i = 0; row < 6; row++) {
-            const rowEl = document.createElement('tr');
-            for (let col = 0; col < 7; col++) {
-                const day = this.calendar.currentMonth.days[i-startsOn];
-                const clone = document.importNode(this.templates.day.content, true);
-                const dInner = clone.querySelector('.day-inner')!;
-                const dayEl = clone.querySelector('.day')!;
-                dInner.innerHTML = `${day ? day.number : '&nbsp;'}`;
-                dayEl.classList.add(day ? 'on' : 'off');
-                if(day && todaysDate.toString() === day.toDate().toString()) {
-                    dayEl.classList.add('today');
-                }
-                dInner.setAttribute('data-day-index', day ? `${i-startsOn}` : '');
-                rowEl.appendChild(clone);
-                i++;
-            }
-            this.el.querySelector('table tbody')!.appendChild(rowEl);
-        }
-        // btns
-        this.btns.month.innerHTML = `${this.calendar.currentMonth.name}`;
-        this.btns.year.innerHTML = `${this.calendar.currentMonth.year}`;
-        // set height of tiny calendar
-        this.el.style.height = this.el.clientHeight + 'px';
-    }
+  private changeMonth(month: MonthOfTheYear) {
+    this.calendar.setMonth(month);
+    this.toggleSection(this.sections.pickMonths);
+    this.render();
+  }
 
-    private onClickPrevNext(dir: string) {
-        if (dir === 'prev') {
-            this.calendar.previousMonth();
-            this.render();
-        } else if (dir === 'next') {
-            this.calendar.nextMonth();
-            this.render();
-        }
-    }
+  private changeYear(year: number) {
+    this.calendar.setYear(year);
+    this.toggleSection(this.sections.pickYears);
+    this.render();
+  }
 
-    private onDestroy() {
-        this.el.removeEventListener('click', this.onClick);
+  private toggleSection(section: any) {
+    this.el.querySelectorAll('.open').forEach(el => {
+      if (el !== section) {
+        el.classList.remove('open');
+      }
+    });
+    section.classList.toggle('open');
+  }
+
+  private render() {
+    // reset containers
+    this.el.querySelector('.cal-table thead tr')!.innerHTML = '';
+    this.el.querySelector('.cal-table tbody')!.innerHTML = '';
+    this.sections.pickYears.querySelector('ul')!.innerHTML = '';
+    this.sections.pickMonths.querySelector('ul')!.innerHTML = '';
+    // day names
+    for (let i = 0; i <= 6; i++) {
+      const el = document.createElement('td');
+      el.classList.add('day-name');
+      el.innerHTML = `<div>${DayOfTheWeek[i].substr(0, 1)}</div>`;
+      this.el.querySelector('table thead tr')!.appendChild(el);
     }
+    // months
+    const monthsTarget = this.sections.pickMonths.querySelector('ul');
+    for (let i = 0; i < 12; i++) {
+      const li = document.createElement('li');
+      li.innerText = MonthOfTheYear[i].slice(0, 3);
+      li.classList.add('month');
+      li.setAttribute('data-month-index', `${i}`);
+      monthsTarget.appendChild(li);
+    }
+    // years
+    for (let i = this.calendar.year - 12; i < this.calendar.year + 12; i++) {
+      const yearClone = document.importNode(this.templates.year.content, true);
+      yearClone.querySelector('li').innerHTML = `${i}`;
+      this.sections.pickYears.querySelector('ul').appendChild(yearClone);
+    }
+    // days
+    const startsOn = this.calendar.currentMonth.dayOfTheWeekStartsOn;
+    const date = new Date();
+    const todaysDate = new Date(`${MonthOfTheYear[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`);
+    for (let row = 0, i = 0; row < 6; row++) {
+      const rowEl = document.createElement('tr');
+      for (let col = 0; col < 7; col++) {
+        const day = this.calendar.currentMonth.days[i - startsOn];
+        const clone = document.importNode(this.templates.day.content, true);
+        const dInner = clone.querySelector('.day-inner')!;
+        const dayEl = clone.querySelector('.day')!;
+        dInner.innerHTML = `${day ? day.number : '&nbsp;'}`;
+        dayEl.classList.add(day ? 'on' : 'off');
+        if (day && todaysDate.toString() === day.toDate().toString()) {
+          dayEl.classList.add('today');
+        }
+        dInner.setAttribute('data-day-index', day ? `${i - startsOn}` : '');
+        rowEl.appendChild(clone);
+        i++;
+      }
+      this.el.querySelector('table tbody')!.appendChild(rowEl);
+    }
+    // btns
+    this.btns.month.innerHTML = `${this.calendar.currentMonth.name}`;
+    this.btns.year.innerHTML = `${this.calendar.currentMonth.year}`;
+    // set height of tiny calendar
+    this.el.style.height = this.el.clientHeight + 'px';
+  }
+
+  private onClickPrevNext(dir: string) {
+    if (dir === 'prev') {
+      this.calendar.previousMonth();
+      this.render();
+    } else if (dir === 'next') {
+      this.calendar.nextMonth();
+      this.render();
+    }
+  }
+
+  private onDestroy() {
+    this.el.removeEventListener('click', this.onClick);
+  }
 }

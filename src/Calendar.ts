@@ -11,14 +11,13 @@ const defaultOptions: ICalendarOptions = {
     s: 0,
   },
   month: new Date().getMonth(),
-  year: new Date().getFullYear()
-}
+  year: new Date().getFullYear(),
+};
 
 export default class Calendar {
-  
   public static monthOfTheYear = MonthOfTheYear;
   public static dayOfTheWeek = DayOfTheWeek;
-  
+
   public static isDate(d: any): boolean {
     return d instanceof Date && !isNaN(d.getDay());
   }
@@ -32,21 +31,21 @@ export default class Calendar {
   }
 
   public options: ICalendarOptions;
-  
+
   private _year: number;
-  private month: CalendarMonth;// = new CalendarMonth(this.__year, new Date().getMonth());
+  private month: CalendarMonth; // = new CalendarMonth(this.__year, new Date().getMonth());
   private view: CalendarView | null;
 
   constructor(el: HTMLElement | null, options: ICalendarOptions = {}) {
-    const {baseColor, month, year} = options;
+    const { baseColor, month, year } = options;
     this.options = {
       baseColor: baseColor || defaultOptions.baseColor,
       month: month === MonthOfTheYear.January ? month : month === undefined ? defaultOptions.month : month,
-      year: year || defaultOptions.year
-    }
+      year: year || defaultOptions.year,
+    };
     this._year = this.options.year!;
     this.setMonth(this.options.month!);
-    this.month = new CalendarMonth(this.options.year!, this.options.month!)
+    this.month = new CalendarMonth(this.options.year!, this.options.month!);
     this.view = el === null ? null : new CalendarView(el, this);
   }
 
