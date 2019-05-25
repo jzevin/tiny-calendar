@@ -1,7 +1,10 @@
 {
   "name": "tiny-calendar",
+  "author": "Jeremy Zevin",
+  "description": "Lightweight date picker",
+  "license": "MIT",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "source": "src/Calendar.ts",
   "main": "dist/tiny-calendar.js",
   "module": "dist/tiny-calendar.mjs",
