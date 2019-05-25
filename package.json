@@ -8,6 +8,8 @@
   "source": "src/Calendar.ts",
   "main": "dist/tiny-calendar.js",
   "module": "dist/tiny-calendar.mjs",
+  "umd:main": "dist/tiny-calendar.umd.js",
+  "types": "dist/Calendar.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "dev": "microbundle -w",
@@ -20,10 +22,9 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
-  "dependencies": {
-    "typescript": "^3.4.5"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "typescript": "^3.4.5",
     "@types/jest": "^24.0.13",
     "jest": "^24.8.0",
     "microbundle": "^0.11.0",
