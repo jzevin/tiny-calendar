@@ -38,7 +38,7 @@ const assets = {
                 </ul>
             </section>
             <section class="pick-days">
-                <table class="cal-table" cellspacing="0">
+                <table class="cal-table" cellspacing="0" cellpadding="0">
                     <thead class="days">
                         <tr>
                             <template>
@@ -66,8 +66,6 @@ const assets = {
     css: `
         .tiny-calendar-wrap {
             background-color: #ccc;
-            padding: 0.125em;
-            border-radius: 0.25em;
             overflow: hidden;
             box-shadow: 8px 8px 7px rgba(0, 0, 0, 0.07);
             font-family: sans-serif;
@@ -78,7 +76,7 @@ const assets = {
         }
 
         .tiny-calendar-wrap header {
-            height: 64px;
+            height: auto;
         }
 
         .tiny-calendar-wrap .title {
@@ -100,12 +98,12 @@ const assets = {
 
         .tiny-calendar-wrap .controls .action .btn {
             border: none;
+            outline: none;
             background-color: #333;
             flex: 1 1 auto;
             padding: 0.5em;
             color: #eee;
             text-transform: uppercase;
-            outline: none;
             font-size: 100%;
             line-height: 1.15;
             margin: 0;
@@ -122,6 +120,7 @@ const assets = {
             align-items: center;
             padding: 0.25em;
             color: #555;
+            border: 1px solid #ccc;
         }
 
         .tiny-calendar-wrap .day.on.today{
@@ -154,7 +153,7 @@ const assets = {
             padding: 0.25em 0.75em;
             color: #bbb;
             text-transform: uppercase;
-            outline: 1px solid #444;
+            border: 1px solid #333;
         }
 
         .tiny-calendar-wrap section.pick-months, .tiny-calendar-wrap section.pick-years {
@@ -164,7 +163,7 @@ const assets = {
         }
 
         .tiny-calendar-wrap section.pick-months.open, .tiny-calendar-wrap section.pick-years.open {
-            height: calc(100% - 65px);
+            height: calc(100% - 63px);
         }
 
         .tiny-calendar-wrap section.pick-months ul, .tiny-calendar-wrap section.pick-years ul {
@@ -184,10 +183,10 @@ const assets = {
             display: flex;
             justify-content: center;
             align-items: center;
-            outline: 1px solid #bbb;
             text-transform: uppercase;
             transition: background-color 250ms;
             cursor: pointer;
+            border: 1px solid #ccc;
         }
 
         .tiny-calendar-wrap section.pick-months ul li:hover, .tiny-calendar-wrap section.pick-years ul li:hover {
