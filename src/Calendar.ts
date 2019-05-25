@@ -1,6 +1,18 @@
 import { MonthOfTheYear, DayOfTheWeek } from './CalendarEnums';
 import CalendarMonth from './CalendarMonth';
 import CalendarView from './CalendarView';
+import { HSLAColor, CalendarOptions } from './CalendarModels';
+
+const defaultOptions: CalendarOptions = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth(),
+  baseColor: {
+    h: 0,
+    s: 0,
+    l: 50,
+    a: 1
+  }
+}
 
 export default class Calendar {
 
@@ -17,17 +29,23 @@ export default class Calendar {
   }
 
   public static monthOfTheYear = MonthOfTheYear;
-   public static dayOfTheWeek = DayOfTheWeek;
+  public static dayOfTheWeek = DayOfTheWeek;
+  public options: CalendarOptions;
   
-  private __year: number = new Date().getFullYear();
-  private month: CalendarMonth = new CalendarMonth(this.__year, new Date().getMonth());
+  private __year: number;
+  private month: CalendarMonth;// = new CalendarMonth(this.__year, new Date().getMonth());
   private view: CalendarView | null;
 
-  constructor(el: HTMLElement | null, year?: number, month?: MonthOfTheYear) {
-    year = year || this.__year;
-    month = month === MonthOfTheYear.January ? month : month === undefined ? this.month.monthOfTheYear : month;
-    this.__year = year;
-    this.setMonth(month);
+  constructor(el: HTMLElement | null, options: CalendarOptions = {}) {
+    let {year, month, baseColor} = options;
+    this.options = {
+      year: year || defaultOptions.year,
+      month: month === MonthOfTheYear.January ? month : month === undefined ? defaultOptions.month : month,
+      baseColor: baseColor || defaultOptions.baseColor
+    }
+    this.__year = this.options.year!;
+    this.setMonth(this.options.month!);
+    this.month = new CalendarMonth(this.options.year!, this.options.month!)
     this.view = el === null ? null : new CalendarView(el, this);
   }
 

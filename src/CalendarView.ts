@@ -1,5 +1,10 @@
 import Calendar from "./Calendar";
 import { DayOfTheWeek, MonthOfTheYear } from "./CalendarEnums";
+import { HSLAColor, CalendarOptions } from "./CalendarModels";
+
+function darkenLighten(color: HSLAColor, amt: number): string {
+    return `hsla(${color.h}, ${color.s}%, ${color.l + amt}%, ${color.a})`;
+}
 
 const assets = {
     html: `
@@ -63,12 +68,13 @@ const assets = {
             </section>
         </div>
     `,
-    css: `
+    css: (options: CalendarOptions): string => {
+        return `
         .tiny-calendar-wrap {
-            background-color: #ccc;
             overflow: hidden;
             box-shadow: 8px 8px 7px rgba(0, 0, 0, 0.07);
             font-family: sans-serif;
+            border-radius: 0.35em;
         }
 
         .tiny-calendar-wrap * {
@@ -81,7 +87,7 @@ const assets = {
 
         .tiny-calendar-wrap .title {
             padding: 0.35em 0;
-            background-color: #111;
+            background-color: ${darkenLighten(options.baseColor!, 0)};
             color: #eee;
             text-align: center;
         }
@@ -93,13 +99,13 @@ const assets = {
         .tiny-calendar-wrap .controls .action {
             display: flex;
             flex: 1 1 auto;
-            background-color: #333;
+            background-color: ${darkenLighten(options.baseColor!, 0)};
         }
 
         .tiny-calendar-wrap .controls .action .btn {
             border: none;
             outline: none;
-            background-color: #333;
+            background-color: ${darkenLighten(options.baseColor!, -20)};
             flex: 1 1 auto;
             padding: 0.5em;
             color: #eee;
@@ -111,7 +117,7 @@ const assets = {
         }
 
         .tiny-calendar-wrap .controls .action .btn:hover {
-            background-color: #111;
+            background-color: ${darkenLighten(options.baseColor!, -30)};
         }
 
         .tiny-calendar-wrap .day {
@@ -145,7 +151,7 @@ const assets = {
         }
 
         .tiny-calendar-wrap .cal-table .days {
-            background-color: #555;
+            background-color: ${darkenLighten(options.baseColor!, -40)};
             text-align: center;
         }
 
@@ -153,7 +159,7 @@ const assets = {
             padding: 0.25em 0.75em;
             color: #bbb;
             text-transform: uppercase;
-            border: 1px solid #333;
+            border: 1px solid ${darkenLighten(options.baseColor!, -50)};
         }
 
         .tiny-calendar-wrap section.pick-months, .tiny-calendar-wrap section.pick-years {
@@ -193,6 +199,7 @@ const assets = {
             background-color: #fff;
         }
         `
+    }
 };
 
 export default class CalendarView {
@@ -219,7 +226,7 @@ export default class CalendarView {
         // styles
         this.styles = document.createElement('style');
         this.styles.type = 'text/css';
-        this.styles.innerHTML = assets.css;
+        this.styles.innerHTML = assets.css(this.calendar.options!);
         this.el.appendChild(this.styles);
         // buttons
         this.btns = {
