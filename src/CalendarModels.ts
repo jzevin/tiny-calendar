@@ -1,14 +1,14 @@
 import { MonthOfTheYear } from "./CalendarEnums";
 
-export interface HSLAColor {
+export interface ICalendarOptions {
+    year?: number,
+    month?: MonthOfTheYear,
+    baseColor?: IHSLAColor
+}
+
+export interface IHSLAColor {
     h: number,
     s: number,
     l: number,
     a: number
-}
-
-export interface CalendarOptions {
-    year?: number,
-    month?: MonthOfTheYear,
-    baseColor?: HSLAColor
 }

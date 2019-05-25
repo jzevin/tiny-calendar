@@ -1,74 +1,13 @@
 import Calendar from "./Calendar";
 import { DayOfTheWeek, MonthOfTheYear } from "./CalendarEnums";
-import { HSLAColor, CalendarOptions } from "./CalendarModels";
+import { ICalendarOptions, IHSLAColor } from "./CalendarModels";
 
-function darkenLighten(color: HSLAColor, amt: number): string {
+function darkenLighten(color: IHSLAColor, amt: number): string {
     return `hsla(${color.h}, ${color.s}%, ${color.l + amt}%, ${color.a})`;
 }
 
 const assets = {
-    html: `
-        <div class="tiny-calendar-wrap">
-            <header>
-                <div class="title">Tiny Calendar</div>
-                <nav class="controls">
-                    <div class="action">
-                        <button class="btn btn-prev">&lt;</button>
-                    </div>
-                    <div class="action">
-                        <button class="btn btn-month">September</button>
-                    </div>
-                    <div class="action">
-                        <button class="btn btn-year">2020</button>
-                    </div>
-                    <div class="action">
-                        <button class="btn btn-next">&gt;</button>
-                    </div>
-                </nav>
-            </header>
-            <section class="pick-months">
-                <ul>
-                    <template class="pick-month-template">
-                        <li>
-                            <div>Jan</div>
-                        </li>
-                    </template>
-                </ul>
-            </section>
-            <section class="pick-years">
-                <ul>
-                    <template class="pick-year-template">
-                        <li class="year">xxxx</li>
-                    </template>
-                </ul>
-            </section>
-            <section class="pick-days">
-                <table class="cal-table" cellspacing="0" cellpadding="0">
-                    <thead class="days">
-                        <tr>
-                            <template>
-                                <td>
-                                    <div class="day-name">xxxx</div>
-                                </td>
-                            </template>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <template class="pick-day-template">
-                                <td>
-                                    <div class="day">
-                                        <div class="day-inner">xxxx</div>
-                                    </div>
-                                </td>
-                            </template>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-    `,
-    css: (options: CalendarOptions): string => {
+    css: (options: ICalendarOptions): string => {
         return `
         .tiny-calendar-wrap {
             overflow: hidden;
@@ -199,7 +138,68 @@ const assets = {
             background-color: #fff;
         }
         `
-    }
+    },
+    html: `
+        <div class="tiny-calendar-wrap">
+            <header>
+                <div class="title">Tiny Calendar</div>
+                <nav class="controls">
+                    <div class="action">
+                        <button class="btn btn-prev">&lt;</button>
+                    </div>
+                    <div class="action">
+                        <button class="btn btn-month">September</button>
+                    </div>
+                    <div class="action">
+                        <button class="btn btn-year">2020</button>
+                    </div>
+                    <div class="action">
+                        <button class="btn btn-next">&gt;</button>
+                    </div>
+                </nav>
+            </header>
+            <section class="pick-months">
+                <ul>
+                    <template class="pick-month-template">
+                        <li>
+                            <div>Jan</div>
+                        </li>
+                    </template>
+                </ul>
+            </section>
+            <section class="pick-years">
+                <ul>
+                    <template class="pick-year-template">
+                        <li class="year">xxxx</li>
+                    </template>
+                </ul>
+            </section>
+            <section class="pick-days">
+                <table class="cal-table" cellspacing="0" cellpadding="0">
+                    <thead class="days">
+                        <tr>
+                            <template>
+                                <td>
+                                    <div class="day-name">xxxx</div>
+                                </td>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <template class="pick-day-template">
+                                <td>
+                                    <div class="day">
+                                        <div class="day-inner">xxxx</div>
+                                    </div>
+                                </td>
+                            </template>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    `
 };
 
 export default class CalendarView {
@@ -217,7 +217,7 @@ export default class CalendarView {
         this.container.innerHTML = assets.html;
         this.el = this.container.querySelector<HTMLElement>('.tiny-calendar-wrap')!;
         this.calendar = calendar;
-        //templates
+        // templates
         this.templates = {
             day: this.el.querySelector('template.pick-day-template'),
             month: this.el.querySelector('template.pick-month-template'),
@@ -230,9 +230,9 @@ export default class CalendarView {
         this.el.appendChild(this.styles);
         // buttons
         this.btns = {
-            previous: this.el.querySelector<HTMLButtonElement>('.btn-prev'),
-            next: this.el.querySelector<HTMLButtonElement>('.btn-next'),
             month: this.el.querySelector<HTMLButtonElement>('.btn-month'),
+            next: this.el.querySelector<HTMLButtonElement>('.btn-next'),
+            previous: this.el.querySelector<HTMLButtonElement>('.btn-prev'),
             year: this.el.querySelector<HTMLButtonElement>('.btn-year')
         };
         // sections
@@ -250,7 +250,7 @@ export default class CalendarView {
     private onClick(e: MouseEvent) {
         const t: HTMLElement = e.target as HTMLTemplateElement;
         if(t.classList.contains('day-inner') || t.classList.contains('day')) {
-            console.log(this.calendar.currentMonth.days[Number(t.dataset[`dayIndex`])]);
+            // console.log(this.calendar.currentMonth.days[Number(t.dataset[`dayIndex`])]);
         } else if (t.classList.contains('btn')) {
             if(t.classList.contains('btn-month')) {
                 this.toggleSection(this.sections.pickMonths);
@@ -282,7 +282,9 @@ export default class CalendarView {
 
     private toggleSection(section: any) {
         this.el.querySelectorAll('.open').forEach(el=>{
-            if(el!==section) el.classList.remove('open');
+            if(el!==section) {
+                el.classList.remove('open');
+            }
         });
         section.classList.toggle('open');
     }
@@ -328,7 +330,9 @@ export default class CalendarView {
                 const dayEl = clone.querySelector('.day')!;
                 dInner.innerHTML = `${day ? day.number : '&nbsp;'}`;
                 dayEl.classList.add(day ? 'on' : 'off');
-                if(day && todaysDate.toString() === day.toDate().toString()) dayEl.classList.add('today');
+                if(day && todaysDate.toString() === day.toDate().toString()) {
+                    dayEl.classList.add('today');
+                }
                 dInner.setAttribute('data-day-index', day ? `${i-startsOn}` : '');
                 rowEl.appendChild(clone);
                 i++;
@@ -338,7 +342,7 @@ export default class CalendarView {
         // btns
         this.btns.month.innerHTML = `${this.calendar.currentMonth.name}`;
         this.btns.year.innerHTML = `${this.calendar.currentMonth.year}`;
-        //set height of tiny calendar
+        // set height of tiny calendar
         this.el.style.height = this.el.clientHeight + 'px';
     }
 

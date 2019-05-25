@@ -7,9 +7,8 @@
   "module": "dist/tiny-calendar.mjs",
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "build": "tsc",
-    "micro": "microbundle -w",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "dev": "microbundle -w",
+    "build": "microbundle build",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",

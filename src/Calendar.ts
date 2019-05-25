@@ -1,21 +1,24 @@
-import { MonthOfTheYear, DayOfTheWeek } from './CalendarEnums';
+import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
+import { ICalendarOptions } from './CalendarModels';
 import CalendarMonth from './CalendarMonth';
 import CalendarView from './CalendarView';
-import { HSLAColor, CalendarOptions } from './CalendarModels';
 
-const defaultOptions: CalendarOptions = {
-  year: new Date().getFullYear(),
-  month: new Date().getMonth(),
+const defaultOptions: ICalendarOptions = {
   baseColor: {
+    a: 1,
     h: 0,
-    s: 0,
     l: 50,
-    a: 1
-  }
+    s: 0,
+  },
+  month: new Date().getMonth(),
+  year: new Date().getFullYear()
 }
 
 export default class Calendar {
-
+  
+  public static monthOfTheYear = MonthOfTheYear;
+  public static dayOfTheWeek = DayOfTheWeek;
+  
   public static isDate(d: any): boolean {
     return d instanceof Date && !isNaN(d.getDay());
   }
@@ -28,33 +31,31 @@ export default class Calendar {
     return num >= min && num <= max;
   }
 
-  public static monthOfTheYear = MonthOfTheYear;
-  public static dayOfTheWeek = DayOfTheWeek;
-  public options: CalendarOptions;
+  public options: ICalendarOptions;
   
-  private __year: number;
+  private _year: number;
   private month: CalendarMonth;// = new CalendarMonth(this.__year, new Date().getMonth());
   private view: CalendarView | null;
 
-  constructor(el: HTMLElement | null, options: CalendarOptions = {}) {
-    let {year, month, baseColor} = options;
+  constructor(el: HTMLElement | null, options: ICalendarOptions = {}) {
+    const {baseColor, month, year} = options;
     this.options = {
-      year: year || defaultOptions.year,
+      baseColor: baseColor || defaultOptions.baseColor,
       month: month === MonthOfTheYear.January ? month : month === undefined ? defaultOptions.month : month,
-      baseColor: baseColor || defaultOptions.baseColor
+      year: year || defaultOptions.year
     }
-    this.__year = this.options.year!;
+    this._year = this.options.year!;
     this.setMonth(this.options.month!);
     this.month = new CalendarMonth(this.options.year!, this.options.month!)
     this.view = el === null ? null : new CalendarView(el, this);
   }
 
   public get year(): number {
-    return this.__year;
+    return this._year;
   }
 
   public setYear(year: number) {
-    this.__year = year;
+    this._year = year;
     this.setMonth(this.currentMonth.monthOfTheYear);
   }
 
@@ -68,10 +69,9 @@ export default class Calendar {
 
   public nextMonth() {
     let nextMonth = this.month.monthOfTheYear + 1;
-    let year = this.__year;
     if (nextMonth > 11) {
       nextMonth = MonthOfTheYear.January;
-      this.__year++;
+      this._year++;
     }
     this.setMonth(nextMonth);
   }
@@ -80,7 +80,7 @@ export default class Calendar {
     let prevMonth = this.month.monthOfTheYear - 1;
     if (prevMonth < 0) {
       prevMonth = MonthOfTheYear.December;
-      this.__year--;
+      this._year--;
     }
     this.setMonth(prevMonth);
   }

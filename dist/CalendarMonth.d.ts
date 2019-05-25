@@ -1,9 +1,9 @@
 import CalendarDay from './CalendarDay';
 import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
 export default class CalendarMonth {
-    private __monthOfTheYear;
-    private __days;
-    private __year;
+    private _monthOfTheYear;
+    private _days;
+    private _year;
     constructor(year: number, month: MonthOfTheYear);
     readonly name: string;
     readonly days: CalendarDay[];
