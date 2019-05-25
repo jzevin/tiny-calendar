@@ -1,4 +1,4 @@
-import { MonthOfTheYear } from "./CalendarEnums";
+import { MonthOfTheYear } from './CalendarEnums';
 export interface ICalendarOptions {
     year?: number;
     month?: MonthOfTheYear;
