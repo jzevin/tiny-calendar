@@ -6,10 +6,10 @@ const options = {
     l: 60,
     a: 1,
   },
-  onDateSelected: (d)=>{
-    if(!d) return;
+  onDateSelected: d => {
+    if (!d) return;
     console.log('yo!', d);
     out.value = `${d.monthName} - ${d.number} - ${d.year}`;
-  }
+  },
 };
 const cal = new tinyCalendar(document.querySelector('#cal'), options);

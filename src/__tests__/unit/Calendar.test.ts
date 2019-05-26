@@ -46,7 +46,6 @@ test(`Changing the calendar year should also change the month.`, () => {
   expect(cal6.currentMonth.days[0].name).toBe(DayOfTheWeek[DayOfTheWeek.Tuesday]);
 });
 
-
 const cal7 = new Calendar(null, { year: 2011, month: 0 });
 test(`The calendar should start at January 2011 and then be December 2010`, () => {
   expect(cal7.year).toBe(2011);

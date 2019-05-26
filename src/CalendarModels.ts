@@ -4,7 +4,7 @@ export interface ICalendarOptions {
   year?: number;
   month?: MonthOfTheYear;
   baseColor?: IHSLAColor;
-  onDateSelected?: (data:any) => void;
+  onDateSelected?: (data: any) => void;
 }
 
 export interface IHSLAColor {

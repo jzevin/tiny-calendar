@@ -252,7 +252,7 @@ export default class CalendarView {
     const t: HTMLElement = e.target as HTMLTemplateElement;
     if (t.classList.contains('day-inner') || t.classList.contains('day')) {
       // if callback
-      if(this.calendar.options.onDateSelected) {
+      if (this.calendar.options.onDateSelected) {
         const day = this.selectableDays[Number(t.dataset[`selectableDayIndex`])];
         this.calendar.options.onDateSelected(day);
       }
@@ -334,8 +334,8 @@ export default class CalendarView {
       const rowEl = document.createElement('tr');
       for (let col = 0; col < 7; col++) {
         const day = this.calendar.currentMonth.days[i - startsOn];
-        const prevDay = previousMonth.days[previousMonth.days.length-(startsOn - i)];
-        const nextDay = nextMonth.days[-currentMonthLength+(i - startsOn)];
+        const prevDay = previousMonth.days[previousMonth.days.length - (startsOn - i)];
+        const nextDay = nextMonth.days[-currentMonthLength + (i - startsOn)];
         const clone = document.importNode(this.templates.day.content, true);
         const dInner = clone.querySelector('.day-inner')!;
         const dayEl = clone.querySelector('.day')!;
@@ -343,17 +343,17 @@ export default class CalendarView {
         if (day && todaysDate.toString() === day.toDate().toString()) {
           dayEl.classList.add('today');
         }
-        if(day) {
+        if (day) {
           dInner.innerHTML = `${day.number}`;
           this.selectableDays[i] = day;
-        } else if(prevDay) {
+        } else if (prevDay) {
           dInner.innerHTML = `${prevDay.number}`;
           this.selectableDays[i] = prevDay;
-        } else if(nextDay) {
+        } else if (nextDay) {
           dInner.innerHTML = `${nextDay.number}`;
           this.selectableDays[i] = nextDay;
         }
-        dInner.setAttribute('data-selectable-day-index',`${i}`);
+        dInner.setAttribute('data-selectable-day-index', `${i}`);
         rowEl.appendChild(clone);
         i++;
       }
