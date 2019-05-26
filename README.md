@@ -1,5 +1,5 @@
 # tiny-calendar
 
-Building a calendr class for fun
+A lightweight, zero-dependency, vanilla JavaScript date picker.
 
-- maybe going to use it for a Angular Module at some point.
+https://stackblitz.com/edit/tiny-calendar-demo?embed=1&file=index.ts
