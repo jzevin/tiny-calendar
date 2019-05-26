@@ -41,8 +41,8 @@ export default class Calendar {
     this.options = {
       baseColor: baseColor || defaultOptions.baseColor,
       month: month === MonthOfTheYear.January ? month : month === undefined ? defaultOptions.month : month,
-      year: year || defaultOptions.year,
-      onDateSelected
+      onDateSelected,
+      year: year || defaultOptions.year
     };
     this._year = this.options.year!;
     this.setMonth(this.options.month!);

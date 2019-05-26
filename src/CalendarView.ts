@@ -1,7 +1,6 @@
 import Calendar from './Calendar';
 import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
 import { ICalendarOptions, IHSLAColor } from './CalendarModels';
-import CalendarDay from './CalendarDay';
 
 function darkenLighten(color: IHSLAColor, amt: number): string {
   return `hsla(${color.h}, ${color.s}%, ${color.l + amt}%, ${color.a})`;
