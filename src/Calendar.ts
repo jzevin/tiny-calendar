@@ -83,4 +83,24 @@ export default class Calendar {
     }
     this.setMonth(prevMonth);
   }
+
+  public getPreviousMonth() {
+    let prevMonth = this.month.monthOfTheYear - 1;
+    let year = this._year;
+    if (prevMonth < 0) {
+      prevMonth = MonthOfTheYear.December;
+      year--;
+    }
+    return new CalendarMonth(year, prevMonth);
+  }
+
+  public getNextMonth() {
+    let nextMonth = this.month.monthOfTheYear + 1;
+    let year = this._year;
+    if (nextMonth > 11) {
+      nextMonth = MonthOfTheYear.January;
+      year++;
+    }
+    return new CalendarMonth(year, nextMonth);
+  }
 }

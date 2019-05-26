@@ -69,7 +69,7 @@ const assets = {
         }
 
         .tiny-calendar-wrap .day.on.today{
-            background-color: #fff;
+            background-color: #fff27d;
         }
 
         .tiny-calendar-wrap .day.on {
@@ -83,6 +83,7 @@ const assets = {
 
         .tiny-calendar-wrap .day.off {
             background-color: #dedede;
+            color: #999;
         }
 
         .tiny-calendar-wrap .cal-table {
@@ -318,21 +319,35 @@ export default class CalendarView {
     }
     // days
     const startsOn = this.calendar.currentMonth.dayOfTheWeekStartsOn;
+    const currentMonthLength = this.calendar.currentMonth.days.length;
+    const previousMonth = this.calendar.getPreviousMonth();
+    const nextMonth = this.calendar.getNextMonth();
     const date = new Date();
     const todaysDate = new Date(`${MonthOfTheYear[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`);
     for (let row = 0, i = 0; row < 6; row++) {
       const rowEl = document.createElement('tr');
       for (let col = 0; col < 7; col++) {
         const day = this.calendar.currentMonth.days[i - startsOn];
+        const prevDay = previousMonth.days[previousMonth.days.length-(startsOn - i)];
+        const nextDay = nextMonth.days[-currentMonthLength+(i - startsOn)];
         const clone = document.importNode(this.templates.day.content, true);
         const dInner = clone.querySelector('.day-inner')!;
         const dayEl = clone.querySelector('.day')!;
-        dInner.innerHTML = `${day ? day.number : '&nbsp;'}`;
         dayEl.classList.add(day ? 'on' : 'off');
         if (day && todaysDate.toString() === day.toDate().toString()) {
           dayEl.classList.add('today');
         }
-        dInner.setAttribute('data-day-index', day ? `${i - startsOn}` : '');
+        if(day) {
+          dInner.innerHTML = `${day.number}`;
+          dInner.setAttribute('data-day-index',`${i - startsOn}`);
+        } else if(prevDay) {
+          dInner.innerHTML = `${prevDay.number}`;
+          dInner.setAttribute('data-day-index',`${prevDay.number}`);
+        } else if(nextDay) {
+          dInner.innerHTML = `${nextDay.number}`;
+          dInner.setAttribute('data-day-index',`${nextDay.number}`);
+        }
+        // dInner.setAttribute('data-day-index', day ? `${i - startsOn}` : '');
         rowEl.appendChild(clone);
         i++;
       }

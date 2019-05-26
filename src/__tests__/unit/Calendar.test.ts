@@ -44,6 +44,21 @@ test(`Changing the calendar year should also change the month.`, () => {
   expect(cal6.currentMonth.days[0].name).toBe(DayOfTheWeek[DayOfTheWeek.Sunday]);
   cal6.setYear(2019);
   expect(cal6.currentMonth.days[0].name).toBe(DayOfTheWeek[DayOfTheWeek.Tuesday]);
-  // cal6.currentMonth.days[0].toDate()
-  // expect(cal6.currentMonth.days[0].toDate().toString()).toBe(new Date('January 1 2019').toString());
+});
+
+
+const cal7 = new Calendar(null, { year: 2011, month: 0 });
+test(`The calendar should start at January 2011 and then be December 2010`, () => {
+  expect(cal7.year).toBe(2011);
+  expect(cal7.currentMonth.name).toBe('January');
+  const pm = cal7.getPreviousMonth();
+  // expect(pm.year).toBe(2010);
+  // expect(pm.name).toBe('December');
+  cal7.previousMonth();
+  cal7.setYear(1990);
+  expect(cal7.year).toBe(1990);
+  expect(cal7.currentMonth.name).toBe('December');
+  const nm = cal7.getNextMonth();
+  expect(nm.year).toBe(1991);
+  expect(nm.name).toBe('January');
 });
