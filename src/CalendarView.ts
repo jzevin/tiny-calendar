@@ -1,6 +1,7 @@
 import Calendar from './Calendar';
 import { DayOfTheWeek, MonthOfTheYear } from './CalendarEnums';
 import { ICalendarOptions, IHSLAColor } from './CalendarModels';
+import CalendarDay from './CalendarDay';
 
 function darkenLighten(color: IHSLAColor, amt: number): string {
   return `hsla(${color.h}, ${color.s}%, ${color.l + amt}%, ${color.a})`;
@@ -66,6 +67,7 @@ const assets = {
             padding: 0.25em;
             color: #555;
             border: 1px solid #ccc;
+            cursor: pointer;
         }
 
         .tiny-calendar-wrap .day.on.today{
@@ -74,7 +76,6 @@ const assets = {
 
         .tiny-calendar-wrap .day.on {
             background-color: #eee;
-            cursor: pointer;
         }
 
         .tiny-calendar-wrap .day.on:hover {
@@ -211,6 +212,7 @@ export default class CalendarView {
   private btns: any;
   private templates: any;
   private sections: any;
+  private selectableDays: any[] = [];
 
   constructor(el: HTMLElement, calendar: Calendar) {
     this.container = el;
@@ -250,7 +252,11 @@ export default class CalendarView {
   private onClick(e: MouseEvent) {
     const t: HTMLElement = e.target as HTMLTemplateElement;
     if (t.classList.contains('day-inner') || t.classList.contains('day')) {
-      // console.log(this.calendar.currentMonth.days[Number(t.dataset[`dayIndex`])]);
+      // if callback
+      if(this.calendar.options.onDateSelected) {
+        const day = this.selectableDays[Number(t.dataset[`selectableDayIndex`])];
+        this.calendar.options.onDateSelected(day);
+      }
     } else if (t.classList.contains('btn')) {
       if (t.classList.contains('btn-month')) {
         this.toggleSection(this.sections.pickMonths);
@@ -318,6 +324,7 @@ export default class CalendarView {
       this.sections.pickYears.querySelector('ul').appendChild(yearClone);
     }
     // days
+    this.selectableDays = [];
     const startsOn = this.calendar.currentMonth.dayOfTheWeekStartsOn;
     const currentMonthLength = this.calendar.currentMonth.days.length;
     const previousMonth = this.calendar.getPreviousMonth();
@@ -339,15 +346,15 @@ export default class CalendarView {
         }
         if(day) {
           dInner.innerHTML = `${day.number}`;
-          dInner.setAttribute('data-day-index',`${i - startsOn}`);
+          this.selectableDays[i] = day;
         } else if(prevDay) {
           dInner.innerHTML = `${prevDay.number}`;
-          dInner.setAttribute('data-day-index',`${prevDay.number}`);
+          this.selectableDays[i] = prevDay;
         } else if(nextDay) {
           dInner.innerHTML = `${nextDay.number}`;
-          dInner.setAttribute('data-day-index',`${nextDay.number}`);
+          this.selectableDays[i] = nextDay;
         }
-        // dInner.setAttribute('data-day-index', day ? `${i - startsOn}` : '');
+        dInner.setAttribute('data-selectable-day-index',`${i}`);
         rowEl.appendChild(clone);
         i++;
       }

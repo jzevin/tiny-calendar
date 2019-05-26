@@ -10,15 +10,33 @@
         body {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
         }
         #cal {
-            flex: 0 0 50vw;
+            flex: 1 1 100%;
             max-width: 380px;
+        }
+        #out {
+            flex: 1 1 100%;
+            display: flex;
+            justify-content: center;
+            padding: 2em;
+        }
+        #output {
+            font-size: 1.25em;
+            padding: 0.5em;
+            flex: 1 1 100%;
+            max-width: 380px;
+            border: 1px solid #ccc;
+            border-radius: 0.25em;
         }
     </style>
 </head>
 <body>
     <div id="cal"></div>
+    <div id="out">
+        <input type="text" id="output">
+    </div>
     <script src="../../../dist/tiny-calendar.umd.js"></script>
     <script src="./index.js"></script>
 </body>

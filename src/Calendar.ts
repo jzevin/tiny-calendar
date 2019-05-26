@@ -37,11 +37,12 @@ export default class Calendar {
   private view: CalendarView | null;
 
   constructor(el: HTMLElement | null, options: ICalendarOptions = {}) {
-    const { baseColor, month, year } = options;
+    const { baseColor, month, year, onDateSelected } = options;
     this.options = {
       baseColor: baseColor || defaultOptions.baseColor,
       month: month === MonthOfTheYear.January ? month : month === undefined ? defaultOptions.month : month,
       year: year || defaultOptions.year,
+      onDateSelected
     };
     this._year = this.options.year!;
     this.setMonth(this.options.month!);
